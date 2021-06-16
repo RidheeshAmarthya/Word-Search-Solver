@@ -1,0 +1,201 @@
+<html>
+<head>
+<title>main.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #66d9ef; font-style: italic;}
+.s1 { color: #f8f8f2;}
+.s2 { color: #75715e;}
+.s3 { color: #f92672;}
+.s4 { color: #ae81ff;}
+.s5 { color: #e6db74;}
+</style>
+</head>
+<body bgcolor="#272822">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+main.py</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">numpy </span><span class="s0">as </span><span class="s1">np</span>
+
+<span class="s2">#Row and Column size of the Word Search Matrix</span>
+<span class="s1">row </span><span class="s3">= </span><span class="s4">24</span>
+<span class="s1">column </span><span class="s3">= </span><span class="s4">24</span>
+
+<span class="s2">#Prints the Word Search matrix with index</span>
+<span class="s0">def </span><span class="s1">printit(string2array)</span><span class="s3">:</span>
+
+    <span class="s1">i </span><span class="s3">= </span><span class="s4">0</span>
+    <span class="s0">while </span><span class="s1">(i </span><span class="s3">!= </span><span class="s1">row </span><span class="s3">* </span><span class="s1">column)</span><span class="s3">:</span>
+        <span class="s0">if </span><span class="s1">(i </span><span class="s3">% </span><span class="s1">row </span><span class="s3">== </span><span class="s4">0</span><span class="s1">)</span><span class="s3">:</span>
+            <span class="s1">print(</span><span class="s5">&quot;</span><span class="s4">\n</span><span class="s5">&quot;</span><span class="s1">)</span>
+        <span class="s1">print(string2array[i], </span><span class="s5">&quot;%3.0f&quot; </span><span class="s3">% </span><span class="s1">i, </span><span class="s5">&quot;&quot;</span><span class="s1">, end</span><span class="s3">=</span><span class="s5">''</span><span class="s1">)</span>
+        <span class="s1">i </span><span class="s3">+= </span><span class="s4">1</span>
+
+<span class="s2">#Finds the words in Rows</span>
+<span class="s0">def </span><span class="s1">findRow(String, Find)</span><span class="s3">:</span>
+
+    <span class="s1">index </span><span class="s3">= </span><span class="s1">String.find(Find)</span>
+    <span class="s0">if </span><span class="s1">index </span><span class="s3">== -</span><span class="s4">1</span><span class="s3">:</span>
+        <span class="s1">temp </span><span class="s3">= </span><span class="s1">String[</span><span class="s3">::-</span><span class="s4">1</span><span class="s1">]</span>
+        <span class="s1">index </span><span class="s3">= </span><span class="s1">temp.find(Find)</span>
+        <span class="s1">a </span><span class="s3">= </span><span class="s1">[]</span>
+        <span class="s0">for </span><span class="s1">i </span><span class="s0">in </span><span class="s1">range(row </span><span class="s3">* </span><span class="s1">column)</span><span class="s3">:</span>
+            <span class="s1">a.append(row </span><span class="s3">* </span><span class="s1">column </span><span class="s3">- </span><span class="s1">i </span><span class="s3">- </span><span class="s4">1</span><span class="s1">)</span>
+        <span class="s0">return </span><span class="s1">a[index]</span>
+    <span class="s0">else</span><span class="s3">:</span>
+        <span class="s0">return </span><span class="s1">index</span>
+
+<span class="s2">#Finds the words in Column</span>
+<span class="s0">def </span><span class="s1">findColumn(String, Find)</span><span class="s3">:</span>
+
+    <span class="s1">arr </span><span class="s3">= </span><span class="s1">np.array([char </span><span class="s0">for </span><span class="s1">char </span><span class="s0">in </span><span class="s1">String])</span>
+    <span class="s1">arr </span><span class="s3">= </span><span class="s1">arr.reshape(row, column)</span>
+    <span class="s1">transpose </span><span class="s3">= </span><span class="s1">arr.copy()</span>
+
+    <span class="s1">i </span><span class="s3">= </span><span class="s4">0</span>
+    <span class="s1">j </span><span class="s3">= </span><span class="s4">0</span>
+    <span class="s0">while </span><span class="s1">i </span><span class="s3">&lt; </span><span class="s1">row</span><span class="s3">:</span>
+        <span class="s0">while </span><span class="s1">j </span><span class="s3">&lt; </span><span class="s1">column</span><span class="s3">:</span>
+            <span class="s1">transpose[j][i] </span><span class="s3">= </span><span class="s1">arr[i][j]</span>
+            <span class="s1">j </span><span class="s3">+= </span><span class="s4">1</span>
+        <span class="s1">j </span><span class="s3">= </span><span class="s4">0</span>
+        <span class="s1">i </span><span class="s3">+= </span><span class="s4">1</span>
+
+    <span class="s1">final </span><span class="s3">= </span><span class="s5">''</span>
+    <span class="s1">i </span><span class="s3">= </span><span class="s4">0</span>
+    <span class="s1">j </span><span class="s3">= </span><span class="s4">0</span>
+    <span class="s0">while </span><span class="s1">i </span><span class="s3">&lt; </span><span class="s1">row</span><span class="s3">:</span>
+        <span class="s0">while </span><span class="s1">j </span><span class="s3">&lt; </span><span class="s1">column</span><span class="s3">:</span>
+            <span class="s1">final </span><span class="s3">= </span><span class="s1">final </span><span class="s3">+ </span><span class="s1">transpose[i][j]</span>
+            <span class="s1">j </span><span class="s3">+= </span><span class="s4">1</span>
+        <span class="s1">j </span><span class="s3">= </span><span class="s4">0</span>
+        <span class="s1">i </span><span class="s3">+= </span><span class="s4">1</span>
+
+    <span class="s1">index </span><span class="s3">= </span><span class="s1">findRow(final, Find)</span>
+
+    <span class="s1">a </span><span class="s3">= </span><span class="s1">np.arange(</span><span class="s4">0</span><span class="s1">, row </span><span class="s3">* </span><span class="s1">column)</span>
+    <span class="s1">a </span><span class="s3">= </span><span class="s1">a.reshape(row, column)</span>
+    <span class="s1">b </span><span class="s3">= </span><span class="s1">a.copy()</span>
+
+    <span class="s1">i </span><span class="s3">= </span><span class="s4">0</span>
+    <span class="s1">j </span><span class="s3">= </span><span class="s4">0</span>
+    <span class="s0">while </span><span class="s1">i </span><span class="s3">&lt; </span><span class="s1">row</span><span class="s3">:</span>
+        <span class="s0">while </span><span class="s1">j </span><span class="s3">&lt; </span><span class="s1">column</span><span class="s3">:</span>
+            <span class="s1">b[j][i] </span><span class="s3">= </span><span class="s1">a[i][j]</span>
+            <span class="s1">j </span><span class="s3">+= </span><span class="s4">1</span>
+        <span class="s1">j </span><span class="s3">= </span><span class="s4">0</span>
+        <span class="s1">i </span><span class="s3">+= </span><span class="s4">1</span>
+    <span class="s1">b </span><span class="s3">= </span><span class="s1">b.flatten()</span>
+    <span class="s0">return</span><span class="s1">(b[index])</span>
+
+<span class="s2">#Find the words Diagonally</span>
+<span class="s0">def </span><span class="s1">findDiagonal(String, Find)</span><span class="s3">:</span>
+
+    <span class="s1">charArr </span><span class="s3">= </span><span class="s1">[char </span><span class="s0">for </span><span class="s1">char </span><span class="s0">in </span><span class="s1">String]</span>
+    <span class="s1">a </span><span class="s3">= </span><span class="s1">np.arange(row </span><span class="s3">* </span><span class="s1">column).reshape(row ,column)</span>
+
+    <span class="s1">diag1 </span><span class="s3">= </span><span class="s1">[a[</span><span class="s3">::</span><span class="s1">, </span><span class="s3">::-</span><span class="s4">1</span><span class="s1">].diagonal(</span><span class="s3">-</span><span class="s1">i) </span><span class="s0">for </span><span class="s1">i </span><span class="s0">in </span><span class="s1">range(</span><span class="s3">-</span><span class="s1">a.shape[</span><span class="s4">0</span><span class="s1">] </span><span class="s3">+ </span><span class="s4">1</span><span class="s1">, a.shape[</span><span class="s4">1</span><span class="s1">])] </span><span class="s2"># [[0], [1, 3], [2, 4, 6], [5, 7], [8]]</span>
+    <span class="s1">diag2 </span><span class="s3">= </span><span class="s1">[a[</span><span class="s3">::-</span><span class="s4">1</span><span class="s1">, </span><span class="s3">:</span><span class="s1">].diagonal(i) </span><span class="s0">for </span><span class="s1">i </span><span class="s0">in </span><span class="s1">range(</span><span class="s3">-</span><span class="s1">a.shape[</span><span class="s4">0</span><span class="s1">] </span><span class="s3">+ </span><span class="s4">1</span><span class="s1">, a.shape[</span><span class="s4">1</span><span class="s1">])] </span><span class="s2">#  [[0], [3, 1], [6, 4, 2], [7, 5], [8]]</span>
+    <span class="s1">diag3 </span><span class="s3">= </span><span class="s1">(a.diagonal(i) </span><span class="s0">for </span><span class="s1">i </span><span class="s0">in </span><span class="s1">range(a.shape[</span><span class="s4">1</span><span class="s1">] </span><span class="s3">- </span><span class="s4">1</span><span class="s1">, </span><span class="s3">-</span><span class="s1">a.shape[</span><span class="s4">0</span><span class="s1">], </span><span class="s3">-</span><span class="s4">1</span><span class="s1">)) </span><span class="s2"># [[2], [1, 5], [0, 4, 8], [3, 7], [6]]</span>
+    <span class="s1">diag4 </span><span class="s3">= </span><span class="s1">(a.diagonal(</span><span class="s3">-</span><span class="s1">i) </span><span class="s0">for </span><span class="s1">i </span><span class="s0">in </span><span class="s1">range(a.shape[</span><span class="s4">1</span><span class="s1">] </span><span class="s3">- </span><span class="s4">1</span><span class="s1">, </span><span class="s3">-</span><span class="s1">a.shape[</span><span class="s4">0</span><span class="s1">], </span><span class="s3">-</span><span class="s4">1</span><span class="s1">)) </span><span class="s2"># [[6], [3, 7], [0, 4, 8], [1, 5], [2]]</span>
+
+    <span class="s1">d1 </span><span class="s3">= </span><span class="s1">[n.tolist() </span><span class="s0">for </span><span class="s1">n </span><span class="s0">in </span><span class="s1">diag1]</span>
+    <span class="s1">d2 </span><span class="s3">= </span><span class="s1">[n.tolist() </span><span class="s0">for </span><span class="s1">n </span><span class="s0">in </span><span class="s1">diag2]</span>
+    <span class="s1">d3 </span><span class="s3">= </span><span class="s1">[n.tolist() </span><span class="s0">for </span><span class="s1">n </span><span class="s0">in </span><span class="s1">diag3]</span>
+    <span class="s1">d4r </span><span class="s3">= </span><span class="s1">[n.tolist() </span><span class="s0">for </span><span class="s1">n </span><span class="s0">in </span><span class="s1">diag4]</span>
+
+    <span class="s1">d4 </span><span class="s3">= </span><span class="s1">[]</span>
+    <span class="s0">for </span><span class="s1">i </span><span class="s0">in </span><span class="s1">range(len(d4r))</span><span class="s3">:</span>
+        <span class="s0">for </span><span class="s1">j </span><span class="s0">in </span><span class="s1">range(len(d4r[i]))</span><span class="s3">:</span>
+            <span class="s1">d4.append(d4r[i][j])</span>
+    <span class="s1">d4 </span><span class="s3">= </span><span class="s1">d4[</span><span class="s3">::-</span><span class="s4">1</span><span class="s1">]</span>
+
+    <span class="s1">d3r </span><span class="s3">= </span><span class="s1">[]</span>
+    <span class="s0">for </span><span class="s1">i </span><span class="s0">in </span><span class="s1">range(len(d3))</span><span class="s3">:</span>
+        <span class="s0">for </span><span class="s1">j </span><span class="s0">in </span><span class="s1">range(len(d3[i]))</span><span class="s3">:</span>
+            <span class="s1">d3r.append(d3[i][j])</span>
+    <span class="s1">d3 </span><span class="s3">= </span><span class="s1">d3r[</span><span class="s3">::</span><span class="s1">]</span>
+
+    <span class="s1">d2r </span><span class="s3">= </span><span class="s1">[]</span>
+    <span class="s0">for </span><span class="s1">i </span><span class="s0">in </span><span class="s1">range(len(d2))</span><span class="s3">:</span>
+        <span class="s0">for </span><span class="s1">j </span><span class="s0">in </span><span class="s1">range(len(d2[i]))</span><span class="s3">:</span>
+            <span class="s1">d2r.append(d2[i][j])</span>
+    <span class="s1">d2 </span><span class="s3">= </span><span class="s1">d2r[</span><span class="s3">::</span><span class="s1">]</span>
+
+    <span class="s1">d1r </span><span class="s3">= </span><span class="s1">[]</span>
+    <span class="s0">for </span><span class="s1">i </span><span class="s0">in </span><span class="s1">range(len(d1))</span><span class="s3">:</span>
+        <span class="s0">for </span><span class="s1">j </span><span class="s0">in </span><span class="s1">range(len(d1[i]))</span><span class="s3">:</span>
+            <span class="s1">d1r.append(d1[i][j])</span>
+    <span class="s1">d1 </span><span class="s3">= </span><span class="s1">d1r[</span><span class="s3">::</span><span class="s1">]</span>
+
+    <span class="s1">final1 </span><span class="s3">= </span><span class="s5">&quot;&quot;</span>
+    <span class="s1">i </span><span class="s3">= </span><span class="s4">0</span>
+    <span class="s0">while </span><span class="s1">i </span><span class="s3">&lt; </span><span class="s1">row </span><span class="s3">* </span><span class="s1">column</span><span class="s3">:</span>
+        <span class="s1">final1 </span><span class="s3">= </span><span class="s1">final1 </span><span class="s3">+ </span><span class="s1">str(charArr[d1[i]])</span>
+        <span class="s1">i </span><span class="s3">+= </span><span class="s4">1</span>
+
+    <span class="s1">final2 </span><span class="s3">= </span><span class="s5">&quot;&quot;</span>
+    <span class="s1">i </span><span class="s3">= </span><span class="s4">0</span>
+    <span class="s0">while </span><span class="s1">i </span><span class="s3">&lt; </span><span class="s1">row </span><span class="s3">* </span><span class="s1">column</span><span class="s3">:</span>
+        <span class="s1">final2 </span><span class="s3">= </span><span class="s1">final2 </span><span class="s3">+ </span><span class="s1">str(charArr[d2[i]])</span>
+        <span class="s1">i </span><span class="s3">+= </span><span class="s4">1</span>
+
+    <span class="s1">final3 </span><span class="s3">= </span><span class="s5">&quot;&quot;</span>
+    <span class="s1">i </span><span class="s3">= </span><span class="s4">0</span>
+    <span class="s0">while </span><span class="s1">i </span><span class="s3">&lt; </span><span class="s1">row </span><span class="s3">* </span><span class="s1">column</span><span class="s3">:</span>
+        <span class="s1">final3 </span><span class="s3">= </span><span class="s1">final3 </span><span class="s3">+ </span><span class="s1">str(charArr[d3[i]])</span>
+        <span class="s1">i </span><span class="s3">+= </span><span class="s4">1</span>
+
+    <span class="s1">final4 </span><span class="s3">= </span><span class="s5">&quot;&quot;</span>
+    <span class="s1">i </span><span class="s3">= </span><span class="s4">0</span>
+    <span class="s0">while </span><span class="s1">i </span><span class="s3">&lt; </span><span class="s1">row </span><span class="s3">* </span><span class="s1">column</span><span class="s3">:</span>
+        <span class="s1">final4 </span><span class="s3">= </span><span class="s1">final4 </span><span class="s3">+ </span><span class="s1">str(charArr[d4[i]])</span>
+        <span class="s1">i </span><span class="s3">+= </span><span class="s4">1</span>
+
+    <span class="s1">index1 </span><span class="s3">= </span><span class="s1">findRow(final1, Find)</span>
+    <span class="s1">index2 </span><span class="s3">= </span><span class="s1">findRow(final2, Find)</span>
+    <span class="s1">index3 </span><span class="s3">= </span><span class="s1">findRow(final3, Find)</span>
+    <span class="s1">index4 </span><span class="s3">= </span><span class="s1">findRow(final4, Find)</span>
+
+    <span class="s0">if </span><span class="s1">index1 </span><span class="s3">&gt; </span><span class="s4">0</span><span class="s3">:</span>
+        <span class="s0">return </span><span class="s1">d1[index1]</span>
+    <span class="s0">if </span><span class="s1">index2 </span><span class="s3">&gt; </span><span class="s4">0</span><span class="s3">:</span>
+        <span class="s0">return </span><span class="s1">d2[index2]</span>
+    <span class="s0">if </span><span class="s1">index3 </span><span class="s3">&gt; </span><span class="s4">0</span><span class="s3">:</span>
+        <span class="s0">return </span><span class="s1">d3[index3]</span>
+    <span class="s0">if </span><span class="s1">index4 </span><span class="s3">&gt; </span><span class="s4">0</span><span class="s3">:</span>
+        <span class="s0">return </span><span class="s1">d4[index4]</span>
+    <span class="s0">else</span><span class="s3">:</span>
+        <span class="s0">return </span><span class="s4">0</span>
+
+<span class="s2">#Main Function</span>
+<span class="s0">def </span><span class="s1">main()</span><span class="s3">:</span>
+
+    <span class="s1">words </span><span class="s3">= </span><span class="s4">15</span>
+    <span class="s1">i </span><span class="s3">= </span><span class="s4">0</span>
+
+    <span class="s1">arrayString_input </span><span class="s3">= </span><span class="s5">&quot;UDIMJAYMFGWAZMMSXOWYJJKQIUYYLBMESSALANOITANSXCRRDANVTKECCHNOELOPANGXQCOXYYRVBWTPBVYDYGELYNMUFEBOFKFOAZTLYQIRWAUOLDXJBBEILLKXKTEWEHUBMHXIFJPIAUSCGHYZYBNQSGIAWHGYLLJSHRPPCUTVBPILTNFKACUGYLTNFOIZEPJZBROWAFAXCXYYAIOGPVEJKEFUTXTRTQPLNEGULTLTKGRWLYIVHBNFEYTLPVSLTTTXIARKCLINFRAPSUTIVTEYWLYTKNEEJGAENJEEGSJCRSTKEYTFQTEITYEPUEIREPZIVRKXWRIZHYKVOEJCRCRRNXAAZEGDCNLQVENXNGUALIAWENCMINFFPWIXAIESYTRPZEMHRSUZUOTHRWBJSMBIOPTNPTRKAJBWOMSYIAOHIHUUMDZQDMDGLFLLQMRANMNGDJJORSOULOLMYUBQXOUBTXECDDILFSGGIDGRMUPDQCRCIROTESBMJREIGNOFTERRORRJDRERSUSDOKGCGPOWJTZRDSTLUYCBZKBKFBDJDUYSYIATDCOSNXMLWWWR&quot;</span>
+    <span class="s1">string2array </span><span class="s3">= </span><span class="s1">[char </span><span class="s0">for </span><span class="s1">char </span><span class="s0">in </span><span class="s1">arrayString_input]</span>
+
+    <span class="s1">arrayString_input_words </span><span class="s3">= </span><span class="s5">&quot;OLDREGIME NAPOLEON AUSTRIA FRANCE BASTILLE ESTATESGENERAL COMMONERS NOBILITY CLERGY REIGNOFTERROR NATIONALASSEMBLY MARIEANTOINETTE LOUISXVI ROBESPIERRE GUILLOTINE&quot;</span>
+    <span class="s1">string2array_words </span><span class="s3">= </span><span class="s1">arrayString_input_words.split()</span>
+
+    <span class="s1">print(string2array_words)</span>
+    <span class="s1">printit(string2array)</span>
+    <span class="s1">print(</span><span class="s5">'</span><span class="s4">\n</span><span class="s5">'</span><span class="s1">)</span>
+
+    <span class="s0">while </span><span class="s1">i </span><span class="s3">&lt; </span><span class="s1">words</span><span class="s3">:</span>
+        <span class="s0">if </span><span class="s1">findRow(arrayString_input, string2array_words[i]) </span><span class="s3">!= </span><span class="s4">0</span><span class="s3">:</span>
+            <span class="s1">print(</span><span class="s5">&quot;Row:      &quot;</span><span class="s1">, </span><span class="s5">&quot;%3.0f&quot; </span><span class="s3">% </span><span class="s1">findRow(arrayString_input, string2array_words[i]), i, string2array_words[i])</span>
+        <span class="s0">if </span><span class="s1">findColumn(arrayString_input, string2array_words[i]) </span><span class="s3">!= </span><span class="s4">0</span><span class="s3">:</span>
+            <span class="s1">print(</span><span class="s5">&quot;Column:   &quot;</span><span class="s1">, </span><span class="s5">&quot;%3.0f&quot; </span><span class="s3">% </span><span class="s1">findColumn(arrayString_input, string2array_words[i]), i, string2array_words[i])</span>
+        <span class="s0">if </span><span class="s1">findDiagonal(arrayString_input, string2array_words[i]) </span><span class="s3">!= </span><span class="s4">0</span><span class="s3">:</span>
+            <span class="s1">print(</span><span class="s5">&quot;Diagonal: &quot;</span><span class="s1">, </span><span class="s5">&quot;%3.0f&quot; </span><span class="s3">% </span><span class="s1">findDiagonal(arrayString_input, string2array_words[i]), i, string2array_words[i])</span>
+        <span class="s1">i </span><span class="s3">+= </span><span class="s4">1</span>
+
+<span class="s2">#Main function call</span>
+<span class="s1">main()</span></pre>
+</body>
+</html>
